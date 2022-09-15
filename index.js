@@ -3,15 +3,7 @@ const fs = require('fs')
 const url = require('url')
 const figlet = require('figlet')
 
-
-
 const PORT = process.env.PORT || 8000
-
-// - [X] /singers -> Show the list of singers !
-// - [ ] /singers?country=Ghana -> Show the list of singers from Ghana
-// - [ ] /singers?name=P-Square -> Show the list of singers from Ghana
-
-
 
 const server = http.createServer((req, res) => {
     const page = url.parse(req.url).pathname;
