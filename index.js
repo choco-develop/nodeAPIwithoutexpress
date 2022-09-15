@@ -4,26 +4,13 @@ const url = require('url')
 
 
 
-// Url {
-//     protocol: null,
-//         slashes: null,
-//             auth: null,
-//                 host: null,
-//                     port: null,
-//                         hostname: null,
-//                             hash: null,
-//                                 search: null,
-//                                     query: null,
-//                                         pathname: '/singers',
-//                                             path: '/singers',
-//                                                 href: '/singers'
-// }
 
 const PORT = process.env.PORT || 8000
 
-// /singers -> Show the list of singers
-// /singers?country=Ghana -> Show the list of singers from Ghana
-// /singers?name=P-Square -> Show the list of singers from Ghana
+// - [X] /singers -> Show the list of singers !
+// - [ ] /singers?country=Ghana -> Show the list of singers from Ghana
+// - [ ] /singers?name=P-Square -> Show the list of singers from Ghana
+
 
 
 const server = http.createServer((req, res) => {
@@ -32,6 +19,14 @@ const server = http.createServer((req, res) => {
     if (page === '/') {
         res.statusCode = 403
         res.end('Use /singers endpoint please')
+    } else if (page === '/singers') {
+        if (params.toString() === '') {
+            fs.readFile('./singers.json', 'utf8', (err, data) => {
+                if (err) throw err;
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(data)
+            })
+        }
     }
 })
 
