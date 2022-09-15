@@ -1,4 +1,28 @@
 [
-  { "name": "P-Square", "country": "Nigeria" },
-  { "name": "Shatta Wale", "country": "Ghana" }
+  { 
+    "name": "P-Square", 
+    "country": "Nigeria",
+    "song-name": "Alingo "
+  } ,
+  { "name": "Shatta Wale", 
+  "country": "Ghana",
+  "song-name": "Taking Over "
+},
+{ "name": "Kabza De Small", 
+  "country": "South-Africa",
+  "song-name": "Khusela"
+},
+{ "name": "Hindi Zahra ", 
+  "country": "Morocco",
+  "song-name": "The Blues" 
+},
+{ "name": "Sanaipei Tande", 
+  "country": "Kenya",
+  "song-name": "Mdaka Mdakiwa"
+},
+{ "name": "Diamond Platnumz", 
+  "country": "Tanzania",
+  "song-name": "Fine "
+}
+
 ]
