@@ -1,7 +1,7 @@
 const http = require('http')
 const fs = require('fs')
 const url = require('url')
-
+const figlet = require('figlet')
 
 
 
@@ -27,6 +27,11 @@ const server = http.createServer((req, res) => {
                 res.end(data)
             })
         }
+    } else {
+        figlet('404!', (err, data) => {
+            res.statusCode = 404
+            res.end(data)
+        })
     }
 })
 
