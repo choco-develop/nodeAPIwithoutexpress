@@ -24,8 +24,7 @@ const server = http.createServer((req, res) => {
                 j = JSON.parse(data).filter((e) => e.country === params.get('country'))
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(j))
-            })
-           
+            })         
         } 
         else if(params.get('name')){
             fs.readFile('./singers.json', 'utf8', (err, data) => {
