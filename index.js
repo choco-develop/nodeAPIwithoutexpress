@@ -24,12 +24,31 @@ const server = http.createServer((req, res) => {
                 j = JSON.parse(data).filter((e) => e.country === params.get('country'))
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(j))
+            })         
+        } 
+        else if(params.get('name')){
+            fs.readFile('./singers.json', 'utf8', (err, data) => {
+                if (err) throw err;
+                j = JSON.parse(data).filter((e) => e.name === params.get('name'))
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(j))
             })
-        } else {
+        }
+        else if(params.get('songName')){
+            fs.readFile('./singers.json', 'utf8', (err, data) => {
+                if (err) throw err;
+                j = JSON.parse(data).filter((e) => e.songName === params.get('songName'))
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(j))
+            })
+        }
+       
+        else {
             res.statusCode = 403
             res.end('Use country parameters please')
         }
-    } else {
+    } 
+    else {
         figlet('404!', (err, data) => {
             res.statusCode = 404
             res.end(data)
