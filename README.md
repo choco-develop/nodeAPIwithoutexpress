@@ -11,6 +11,6 @@
 
 ## To go further
 
-- [ ] Transform it to Express API
+- [ ] Transform it to Express API (new repo)
 - [ ] Do the rest of CRUD (CUD)
 - [ ] MongoDB instead of local JSON
