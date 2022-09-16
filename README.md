@@ -7,10 +7,10 @@
 - [x] GET /singers?name=P-Square -> Implement name filter (assigned to @Anita)
 - [x] GET /singers?name=P-Square -> Implement songName filter (assigned to @Anita)
 - [x] Add more content to the `singers.json` file (assigned to @Anita)
+- [x] Transform it to Express API
+- [x] PUT endpoint and modify locally the `singers.json` file (C in CRUD) (assigned to @Anita)
 
 ## To go further
 
-- [ ] PUT endpoint and modify locally the `singers.json` file (C in CRUD) (assigned to @Anita)
-- [ ] Transform it to Express API (new repo)
-- [ ] Do the rest of CRUD (CUD)
+- [ ] Do the rest of CRUD (UD)
 - [ ] MongoDB instead of local JSON

@@ -1,72 +1,69 @@
-const http = require('http')
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const fs = require('fs')
-const url = require('url')
-const figlet = require('figlet')
 
 const PORT = process.env.PORT || 8000
 
-const server = http.createServer((req, res) => {
-    const page = url.parse(req.url).pathname;
-    const params = new url.URLSearchParams(url.parse(req.url).query)
-    if (page === '/') {
-        res.statusCode = 403
-        res.end('Use /singers endpoint please')
-    } else if (page === '/singers') {
-        if (req.method === 'GET') {
-            if (params.toString() === '') {
-                fs.readFile('./singers.json', 'utf8', (err, data) => {
-                    if (err) { throw err };
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(data)
-                })
-            } else if (params.get('country')) {
-                fs.readFile('./singers.json', 'utf8', (err, data) => {
-                    if (err) { throw err };
-                    j = JSON.parse(data).filter((e) => e.country === params.get('country'))
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify(j))
-                })
-            }
-            else if (params.get('name')) {
-                fs.readFile('./singers.json', 'utf8', (err, data) => {
-                    if (err) { throw err };
-                    j = JSON.parse(data).filter((e) => e.name === params.get('name'))
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify(j))
-                })
-            }
-            else if (params.get('songName')) {
-                fs.readFile('./singers.json', 'utf8', (err, data) => {
-                    if (err) { throw err };
-                    j = JSON.parse(data).filter((e) => e.songName === params.get('songName'))
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify(j))
-                })
-            }
-            else {
-                res.statusCode = 403
-                res.end('Use country parameters please')
-            }
-        } else if (req.method === 'POST') {
-            res.statusCode = 500
-            res.end('Use express')
-        }
-        else {
-            figlet('500!', (err, data) => {
-                if (err) { throw err }
-                res.statusCode = 500
-                res.end(data)
-            })
-        }
-    }
-    else {
-        figlet('404!', (err, data) => {
-            res.statusCode = 404
-            res.end(data)
+const app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cors())
+
+
+app.get('/', (req, res) => {
+    res.statusCode = 403
+    res.send('Use /singers endpoint please')
+})
+
+app.get('/singers', (req, res) => {
+    if (Object.keys(req.query).length === 0) {
+        fs.readFile('./singers.json', 'utf8', (err, data) => {
+            if (err) { throw err }
+            res.json(JSON.parse(data))
         })
+    } else if (req.query.hasOwnProperty('country')) {
+        fs.readFile('./singers.json', 'utf8', (err, data) => {
+            if (err) { throw err }
+            j = JSON.parse(data).filter((e) => e.country === req.query.country)
+            res.json(j)
+        })
+    } else if (req.query.hasOwnProperty('name')) {
+        fs.readFile('./singers.json', 'utf8', (err, data) => {
+            if (err) { throw err }
+            j = JSON.parse(data).filter((e) => e.name === req.query.name)
+            res.json(j)
+        })
+    } else if (req.query.hasOwnProperty('songName')) {
+        fs.readFile('./singers.json', 'utf8', (err, data) => {
+            if (err) { throw err }
+            j = JSON.parse(data).filter((e) => e.songName === req.query.songName)
+            res.json(j)
+        })
+    } else {
+        res.statusCode = 403
+        res.send('Use correct parameters')
     }
 })
 
-server.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
+app.post('/singers', (req, res) => {
+    if (req.body.name && req.body.songName && req.body.country) {
+        newEntry = [{ name: req.body.name, songName: req.body.songName, country: req.body.country }]
+        fs.readFile('./singers.json', 'utf8', (err, data) => {
+            if (err) { throw err }
+            let newData = [...JSON.parse(data), newEntry[0]]
+            fs.writeFile('./singers.json', JSON.stringify(newData), (err) => {
+                if (err) { throw err }
+                console.log('File overwritten');
+            })
+        })
+        res.send('Wait for it')
+    } else {
+        res.status(503).send('Invalid request')
+    }
+})
+
+
+
+app.listen(PORT, () => {
+    console.log(`The server is now running on port ${PORT}! Betta Go Catch It!`)
 })
