@@ -19,7 +19,8 @@ app.get('/singers', (req, res) => {
     if (Object.keys(req.query).length === 0) {
         fs.readFile('./singers.json', 'utf8', (err, data) => {
             if (err) { throw err }
-            res.json(JSON.parse(data))
+           res.json(JSON.parse(data))
+           
         })
     } else if (req.query.hasOwnProperty('country')) {
         fs.readFile('./singers.json', 'utf8', (err, data) => {
@@ -57,7 +58,23 @@ app.post('/singers', (req, res) => {
             })
         })
         res.send('Wait for it')
-    } else {
+
+    
+    app.patch('./singers',(req,res)=>{
+        if ( req.body.songName && req.body.name && req.body.country) {
+          let newSong=req.body.songName
+            fs.readFile('./singers.json', 'utf8', (err, data) => {
+                if (err)  throw err;
+                let newData = [...JSON.parse(data), newSong[0]]
+                fs.writeFile('./singers.json', JSON.stringify(newData), (err) => {
+                    if (err) { throw err }
+                    console.log('File overwritten');
+                })
+            })
+        }     
+})
+    }
+else {
         res.status(503).send('Invalid request')
     }
 })

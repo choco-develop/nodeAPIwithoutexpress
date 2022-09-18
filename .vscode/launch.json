@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://app.post('/singers', (req, res) => {    if (req.body.name && req.body.songName && req.body.country) {        newEntry = [{ name: req.body.name, songName: req.body.songName, country: req.body.country }]        fs.readFile('./singers.json', 'utf8', (err, data) => {            if (err) { throw err }            let newData = [...JSON.parse(data), newEntry[0]]            fs.writeFile('./singers.json', JSON.stringify(newData), (err) => {                if (err) { throw err }                console.log('File overwritten');            })        })        res.send('Wait for it')    }",
+            "request": "launch",
+            "url": "http://app.post('/singers', (req, res) => {    if (req.body.name && req.body.songName && req.body.country) {        newEntry = [{ name: req.body.name, songName: req.body.songName, country: req.body.country }]        fs.readFile('./singers.json', 'utf8', (err, data) => {            if (err) { throw err }            let newData = [...JSON.parse(data), newEntry[0]]            fs.writeFile('./singers.json', JSON.stringify(newData), (err) => {                if (err) { throw err }                console.log('File overwritten');            })        })        res.send('Wait for it')    }"
+        }
+    ]
+}
