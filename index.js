@@ -59,24 +59,29 @@ app.post('/singers', (req, res) => {
         })
         res.send('Wait for it')
 
-    
-    app.patch('./singers',(req,res)=>{
-        if ( req.body.songName && req.body.name && req.body.country) {
-          let newSong=req.body.songName
-            fs.readFile('./singers.json', 'utf8', (err, data) => {
-                if (err)  throw err;
-                let newData = [...JSON.parse(data), newSong[0]]
-                fs.writeFile('./singers.json', JSON.stringify(newData), (err) => {
-                    if (err) { throw err }
-                    console.log('File overwritten');
-                })
-            })
-        }     
-})
     }
+    
 else {
         res.status(503).send('Invalid request')
     }
+})
+app.patch('/singers',(req,res)=>{
+       fs.readFile('./singers.json', (err, data) => {
+           if (err) throw err;
+            res.send(data)   
+        /* 
+        if(req.body.country && req.body.name && req.body.songName){
+        let newSong=req.body.songName
+        let name=req.body.name
+        let newData = [...JSON.parse(data), newSong[0]]
+           fs.writeFile('./singers.json', JSON.stringify(newData), (err) => {
+               if (err) { throw err }
+               console.log('File overwritten');
+           })
+            }*/
+       })
+      
+
 })
 
 
