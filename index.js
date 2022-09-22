@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const fs = require('fs')
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8000;
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,7 +19,7 @@ app.get('/singers', (req, res) => {
     if (Object.keys(req.query).length === 0) {
         fs.readFile('./singers.json', 'utf8', (err, data) => {
             if (err) { throw err }
-           res.json(JSON.parse(data))
+           res.send((data))
            
         })
     } else if (req.query.hasOwnProperty('country')) {
